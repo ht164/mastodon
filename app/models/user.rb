@@ -40,10 +40,13 @@ class User < ApplicationRecord
   devise :registerable, :recoverable,
          :rememberable, :trackable, :validatable, :confirmable,
          :two_factor_authenticatable, :two_factor_backupable,
+         :omniauthable,
          otp_secret_encryption_key: ENV['OTP_SECRET'],
          otp_number_of_backup_codes: 10
 
   belongs_to :account, inverse_of: :user, required: true
+  has_many :oauth_authentications, dependent: :destroy
+  has_one :initial_password_usage, dependent: :destroy
   accepts_nested_attributes_for :account
 
   validates :locale, inclusion: I18n.available_locales.map(&:to_s), if: :locale?
@@ -62,6 +65,7 @@ class User < ApplicationRecord
   # It seems possible that a future release of devise-two-factor will
   # handle this itself, and this can be removed from our User class.
   attribute :otp_secret
+  after_update :delete_initial_password_usage, if: :encrypted_password_changed?
 
   def confirmed?
     confirmed_at.present?
@@ -100,4 +104,9 @@ class User < ApplicationRecord
   def sanitize_languages
     filtered_languages.reject!(&:blank?)
   end
+
+  def delete_initial_password_usage
+    initial_password_usage&.destroy!
+  end
+
 end

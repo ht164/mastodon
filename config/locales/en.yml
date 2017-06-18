@@ -201,15 +201,18 @@ en:
     invalid_url: The provided URL is invalid
   auth:
     change_password: Credentials
+    confirmed_email: '(confirmed)'
     delete_account: Delete account
     delete_account_html: If you wish to delete your account, you can <a href="%{path}">proceed here</a>. You will be asked for confirmation.
     didnt_get_confirmation: Didn't receive confirmation instructions?
     forgot_password: Forgot your password?
     login: Log in
     logout: Logout
+    oauth_registration: Continue sign up
     register: Sign up
     resend_confirmation: Resend confirmation instructions
     reset_password: Reset password
+    send_password_setting_url: 'Send password setting URL to your registered email address (%{email}).'
     set_new_password: Set new password
   authorize_follow:
     error: Unfortunately, there was an error looking up the remote account
@@ -311,6 +314,14 @@ en:
     reblog:
       body: 'Your status was boosted by %{name}:'
       subject: "%{name} boosted your status"
+  oauth_authentications:
+    link: Link
+    unlink: Unlink
+    confirm: Are you sure?
+    successfully_unlinked: Successfully unlinked
+    successfully_linked: Successfully linked
+    failed_linking: Failed linking
+    initial_password_usage_note_html: To change Twitter login, please %{link} at the first.
   pagination:
     next: Next
     prev: Prev
@@ -328,6 +339,7 @@ en:
     export: Data export
     followers: Authorized followers
     import: Import
+    oauth_authentications: Twitter login
     preferences: Preferences
     settings: Settings
     two_factor_authentication: Two-factor Authentication

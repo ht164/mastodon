@@ -20,7 +20,8 @@ ActiveRecord::Schema.define(version: 20170609145826) do
     t.string "domain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id", "domain"], name: "index_account_domain_blocks_on_account_id_and_domain", unique: true
+    t.index ["account_id", "domain"], name: "index_account_domain_blocks_on_account_id_and_domain", unique: true, using: :btree
+    t.index ["status_id"], name: "mentions_status_id_index", using: :btree
   end
 
   create_table "accounts", id: :serial, force: :cascade do |t|
@@ -213,6 +214,19 @@ ActiveRecord::Schema.define(version: 20170609145826) do
     t.boolean "superapp", default: false, null: false
     t.string "website"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "oauth_authentications", force: :cascade do |t|
+    t.integer  "user_id",      null: false
+    t.string   "provider",     null: false
+    t.string   "uid",          null: false
+    t.string   "username",     null: false
+    t.string   "token",        null: false
+    t.string   "token_secret", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["provider", "uid"], name: "index_oauth_authentications_on_provider_and_uid", unique: true, using: :btree
+    t.index ["user_id", "provider"], name: "index_oauth_authentications_on_user_id_and_provider", unique: true, using: :btree
   end
 
   create_table "preview_cards", id: :serial, force: :cascade do |t|

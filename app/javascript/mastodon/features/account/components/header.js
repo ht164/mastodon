@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import emojify from '../../../emoji';
@@ -130,6 +131,23 @@ class Header extends ImmutablePureComponent {
 
           <span className='account__header__display-name' dangerouslySetInnerHTML={displayNameHTML} />
           <span className='account__header__username'>@{account.get('acct')} {lockedIcon}</span>
+          
+          <div className='account__header__oauth-authentications oauth-authentications'>
+            {account.getIn(['oauth_authentications'], new Immutable.List()).map(oauth_authentication => {
+              const provider = oauth_authentication.get('provider');
+
+              if (provider === 'twitter') {
+                return (
+                  <a key={provider} href={`https://twitter.com/${oauth_authentication.get('username')}`} target='_blank' rel='noopener'>
+                    <div className='account__header__oauth-authentication oauth-authentication twitter' />
+                  </a>
+                );
+              }
+
+              return <div key={provider} />;
+            })}
+          </div>
+
           <div className='account__header__content' dangerouslySetInnerHTML={content} />
 
           {info}

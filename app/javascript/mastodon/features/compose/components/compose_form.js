@@ -1,6 +1,7 @@
 import React from 'react';
 import CharacterCounter from './character_counter';
 import Button from '../../../components/button';
+import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import ReplyIndicatorContainer from '../containers/reply_indicator_container';
@@ -9,6 +10,7 @@ import { debounce } from 'lodash';
 import UploadButtonContainer from '../containers/upload_button_container';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import Toggle from 'react-toggle';
+import SettingToggle from '../../notifications/components/setting_toggle';
 import Collapsable from '../../../components/collapsable';
 import SpoilerButtonContainer from '../containers/spoiler_button_container';
 import PrivacyDropdownContainer from '../containers/privacy_dropdown_container';
@@ -24,6 +26,8 @@ const messages = defineMessages({
   spoiler_placeholder: { id: 'compose_form.spoiler_placeholder', defaultMessage: 'Content warning' },
   publish: { id: 'compose_form.publish', defaultMessage: 'Toot' },
   publishLoud: { id: 'compose_form.publish_loud', defaultMessage: '{publish}!' },
+  tweet: { id: 'compose_form.tweet', defaultMessage: 'Post to Twitter' },
+  connect_to_twitter: { id: 'compose_form.connect_to_twitter', defaultMessage: 'Connect to Twitter' },
 });
 
 class ComposeForm extends ImmutablePureComponent {
@@ -31,6 +35,8 @@ class ComposeForm extends ImmutablePureComponent {
   static propTypes = {
     intl: PropTypes.object.isRequired,
     text: PropTypes.string.isRequired,
+    account: ImmutablePropTypes.map.isRequired,
+    settings: ImmutablePropTypes.map.isRequired,
     suggestion_token: PropTypes.string,
     suggestions: ImmutablePropTypes.list,
     spoiler: PropTypes.bool,
@@ -50,6 +56,7 @@ class ComposeForm extends ImmutablePureComponent {
     onPaste: PropTypes.func.isRequired,
     onPickEmoji: PropTypes.func.isRequired,
     showSearch: PropTypes.bool,
+    onChangeTweet: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -85,6 +92,10 @@ class ComposeForm extends ImmutablePureComponent {
 
   handleChangeSpoilerText = (e) => {
     this.props.onChangeSpoilerText(e.target.value);
+  }
+
+  onChangeTweet = (e) => {
+    this.props.onChangeTweet(e.target.checked);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -138,15 +149,37 @@ class ComposeForm extends ImmutablePureComponent {
     const { intl, onPaste, showSearch } = this.props;
     const disabled = this.props.is_submitting;
     const text = [this.props.spoiler_text, this.props.text].join('');
+    const account = this.props.account;
+    const settings = this.props.settings;
 
     let publishText    = '';
     let reply_to_other = false;
+    let postControls   = (
+      <label className='compose-form__label with-border' style={{ marginTop: '10px' }}>
+        <span className='compose-form__label__text'>
+          <a href='/settings/oauth_authentications' style={{ color: '#2b90d9', textDecoration: 'none' }}>
+            {intl.formatMessage(messages.connect_to_twitter)}</a></span>
+      </label>
+    );
 
     if (this.props.privacy === 'private' || this.props.privacy === 'direct') {
       publishText = <span className='compose-form__publish-private'><i className='fa fa-lock' /> {intl.formatMessage(messages.publish)}</span>;
     } else {
       publishText = this.props.privacy !== 'unlisted' ? intl.formatMessage(messages.publishLoud, { publish: intl.formatMessage(messages.publish) }) : intl.formatMessage(messages.publish);
     }
+
+    account.getIn(['oauth_authentications'], new Immutable.List()).forEach(oauth_authentication => {
+      const provider = oauth_authentication.get('provider');
+
+      if (provider === 'twitter') {
+        postControls = (
+          <label className='compose-form__label with-border' style={{ marginTop: '10px' }}>
+            <Toggle checked={settings.get('tweet')} onChange={this.onChangeTweet} />
+            <span className='compose-form__label__text'>{intl.formatMessage(messages.tweet)}</span>
+          </label>
+        );
+      }
+    });
 
     return (
       <div className='compose-form'>
@@ -196,6 +229,8 @@ class ComposeForm extends ImmutablePureComponent {
             <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabled || this.props.is_uploading || text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '_').length > 500 || (text.length !==0 && text.trim().length === 0)} block /></div>
           </div>
         </div>
+
+        {postControls}  
       </div>
     );
   }

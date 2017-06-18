@@ -68,6 +68,7 @@ class Account < ApplicationRecord
   has_many :favourites, inverse_of: :account, dependent: :destroy
   has_many :mentions, inverse_of: :account, dependent: :destroy
   has_many :notifications, inverse_of: :account, dependent: :destroy
+  has_many :oauth_authentications, through: :user
 
   # Media
   has_many :media_attachments, dependent: :destroy

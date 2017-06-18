@@ -1034,6 +1034,28 @@
   width: 48px;
 }
 
+.status__oauth-authentications {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  z-index: 3;
+
+  a {
+    width: 24px;
+    height: 24px;
+
+    .oauth-authentication.twitter {
+      border-radius: 50%;
+      background-size: 90% auto;
+      background-position: 70% 70%;
+
+      &:hover {
+        background-color: $classic-primary-color;
+      }
+    }
+  }
+}
+
 .muted {
   .status__content p,
   .status__content a {

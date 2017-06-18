@@ -7,6 +7,10 @@ import uuid from '../uuid';
 const initialState = Immutable.Map({
   onboarded: false,
 
+  compose: Immutable.Map({
+    tweet: false
+  }),
+
   home: Immutable.Map({
     shows: Immutable.Map({
       reblog: true,

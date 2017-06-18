@@ -8,10 +8,13 @@ import {
   fetchComposeSuggestions,
   selectComposeSuggestion,
   changeComposeSpoilerText,
+  changeTweet,
   insertEmojiCompose,
 } from '../../../actions/compose';
 
 const mapStateToProps = state => ({
+  account: state.getIn(['accounts', state.getIn(['meta', 'me'])]),
+  settings: state.getIn(['settings', 'compose']),
   text: state.getIn(['compose', 'text']),
   suggestion_token: state.getIn(['compose', 'suggestion_token']),
   suggestions: state.getIn(['compose', 'suggestions']),
@@ -52,6 +55,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(changeComposeSpoilerText(checked));
   },
 
+  onChangeTweet (checked) {
+    dispatch(changeTweet(checked));
+  },
+  
   onPaste (files) {
     dispatch(uploadCompose(files));
   },
