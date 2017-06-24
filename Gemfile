@@ -64,7 +64,7 @@ gem 'type_attributes'
 gem 'twitter'
 gem 'twitter-text', '~> 1.14'
 gem 'tzinfo-data', '~> 1.2017'
-gem 'webpacker', '~> 1.2'
+gem 'webpacker', '~> 2.0'
 
 group :development, :test do
   gem 'fabrication', '~> 2.16'
