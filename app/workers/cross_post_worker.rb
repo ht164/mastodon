@@ -17,8 +17,11 @@ class CrossPostWorker
     regstr = '(https|http):\/\/' + Regexp.escape(ENV['LOCAL_DOMAIN']) + '\/media\/[a-zA-Z0-9_\-]+'
     text = text.gsub(Regexp.new(regstr), '')
     text = text.strip
-    if text.length > 140
-      text = text.slice(0, 139) + '…'
+
+    text_len = text.gsub(/(https|http):\/\/[a-zA-Z0-9\-_\.!\*'\(\)\/?#=\+$&,;~]+/,"https://x.xx/0123456789")
+    if text_len.length > 140
+      text_over = text_len.slice(139..-1)
+      text = text.gsub(text_over, '…')
     end
 
     media_ids = []
