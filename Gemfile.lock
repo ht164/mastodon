@@ -269,7 +269,7 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-      openssl (2.0.4)
+    openssl (2.0.4)
     orm_adapter (0.5.0)
     ostatus2 (2.0.1)
       addressable (~> 2.4)
@@ -479,7 +479,7 @@ GEM
       memoizable (~> 0.4.2)
       naught (~> 1.1)
       simple_oauth (~> 0.3.1)
-      twitter-text (1.14.6)
+    twitter-text (1.14.6)
       unf (~> 0.1.0)
     type_attributes (0.1.1)
       activemodel (>= 4.2.0)
