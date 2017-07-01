@@ -5,6 +5,8 @@ ja:
         provider: プロバイダー
         uid: Twitter ID
         username: アカウント名
+      user:
+        email: メールアドレス
     errors:
       models:
         account:

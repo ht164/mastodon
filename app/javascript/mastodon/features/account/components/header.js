@@ -71,7 +71,9 @@ class Avatar extends ImmutablePureComponent {
 
 }
 
-class Header extends ImmutablePureComponent {
+@connect(makeMapStateToProps)
+@injectIntl
+export default class Header extends ImmutablePureComponent {
 
   static propTypes = {
     account: ImmutablePropTypes.map,
@@ -158,5 +160,3 @@ class Header extends ImmutablePureComponent {
   }
 
 }
-
-export default connect(makeMapStateToProps)(injectIntl(Header));
