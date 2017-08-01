@@ -21,6 +21,7 @@ import WarningContainer from '../containers/warning_container';
 import { isMobile } from '../../../is_mobile';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { length } from 'stringz';
+import { countableText } from '../util/counter';
 
 const messages = defineMessages({
   placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
@@ -157,12 +158,11 @@ export default class ComposeForm extends ImmutablePureComponent {
   render () {
     const { intl, onPaste, showSearch } = this.props;
     const disabled = this.props.is_submitting;
-    const text = [this.props.spoiler_text, this.props.text].join('');
+    const text     = [this.props.spoiler_text, countableText(this.props.text)].join('');
     const account = this.props.account;
     const settings = this.props.settings;
 
-    let publishText    = '';
-    let reply_to_other = false;
+    let publishText = '';
     let postControls   = (
       <label className='compose-form__label with-border' style={{ marginTop: '10px' }}>
         <span className='compose-form__label__text'>
@@ -238,11 +238,11 @@ export default class ComposeForm extends ImmutablePureComponent {
 
           <div className='compose-form__publish'>
             <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
-            <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabled || this.props.is_uploading || length(text) > 500 || (text.length !==0 && text.trim().length === 0)} block /></div>
+            <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabled || this.props.is_uploading || length(text) > 500 || (text.length !== 0 && text.trim().length === 0)} block /></div>
           </div>
         </div>
 
-        {postControls}  
+        {postControls}
       </div>
     );
   }
