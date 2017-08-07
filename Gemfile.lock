@@ -169,7 +169,7 @@ GEM
       ruby-progressbar (~> 1.4)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
-    goldfinger (2.0.0)
+    goldfinger (2.0.1)
       addressable (~> 2.5)
       http (~> 2.2)
       nokogiri (~> 1.8)
@@ -274,7 +274,7 @@ GEM
     nokogumbo (1.4.13)
       nokogiri
     oauth (0.5.1)
-    oj (3.2.0)
+    oj (3.3.4)
     omniauth (1.6.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -633,4 +633,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.2
+   1.15.3
