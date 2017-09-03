@@ -34,6 +34,7 @@ RUN apk -U upgrade \
     libpq \
     nodejs-npm \
     nodejs \
+    openssl \
     protobuf \
     su-exec \
     tini \
@@ -45,10 +46,26 @@ RUN apk -U upgrade \
  && tar -xzf libiconv.tar.gz -C /tmp/src \
  && rm libiconv.tar.gz \
  && cd /tmp/src/libiconv-$LIBICONV_VERSION \
- && ./configure --prefix=/usr/local \
+ && ./configure CFLAGS="-O2 -march=native" --prefix=/usr/local \
  && make -j$(getconf _NPROCESSORS_ONLN)\
  && make install \
- && libtool --finish /usr/local/lib \
+ && wget -O optipng.tar.gz "http://jaist.dl.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.6/optipng-0.7.6.tar.gz" \
+ && mkdir -p /tmp/src \
+ && tar -xzf optipng.tar.gz -C /tmp/src \
+ && rm optipng.tar.gz \
+ && cd /tmp/src/optipng-0.7.6 \
+ && ./configure --prefix=/usr/local \
+ && make -j$(getconf _NPROCESSORS_ONLY)\
+ && make install \
+ && wget -O mozjpeg.tar.gz "https://github.com/mozilla/mozjpeg/releases/download/v3.2/mozjpeg-3.2-release-source.tar.gz" \
+ && mkdir -p /tmp/src \
+ && tar -xzf mozjpeg.tar.gz -C /tmp/src \
+ && rm mozjpeg.tar.gz \
+ && cd /tmp/src/mozjpeg \
+ && ./configure CFLAGS="-O2 -march=native" --without-simd --prefix=/usr/local \
+ && make -j$(getconf _NPROCESSORS_ONLY)\
+ && make install \
+ && libtool --finish /usr/local/bin \
  && cd /mastodon \
  && rm -rf /tmp/* /var/cache/apk/*
 
@@ -57,6 +74,14 @@ COPY Gemfile Gemfile.lock package.json yarn.lock /mastodon/
 RUN bundle config build.nokogiri --with-iconv-lib=/usr/local/lib --with-iconv-include=/usr/local/include \
  && bundle install -j$(getconf _NPROCESSORS_ONLN) --deployment --without test development \
  && yarn --ignore-optional --pure-lockfile
+
+RUN cd /mastodon/vendor/bundle/ruby/2.4.0/gems/paperclip-compression-0.3.16/bin/linux/x64/ \
+ && mv optipng optipng_bak \
+ && ln -s /usr/local/bin/optipng . \
+ && cd /mastodon/vendor/bundle/ruby/2.4.0//gems/paperclip-compression-0.3.16/bin/linux/x64/ \
+ && mv jpegtran jpegtran_bak \
+ && ln -s /usr/local/bin/jpegtran . \
+ && cd /mastodon
 
 COPY . /mastodon
 

@@ -59,3 +59,5 @@ else
   Paperclip::Attachment.default_options[:path] = (ENV['PAPERCLIP_ROOT_PATH'] || ':rails_root/public/system') + '/:class/:attachment/:id_partition/:style/:filename'
   Paperclip::Attachment.default_options[:url]  = (ENV['PAPERCLIP_ROOT_URL'] || '/system') + '/:class/:attachment/:id_partition/:style/:filename'
 end
+
+Paperclip::Attachment.default_options[:compression] = { :png => '-o 1 -quiet', :jpeg => '-copy none -optimize -perfect' }
