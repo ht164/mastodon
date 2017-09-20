@@ -52,7 +52,7 @@ class MediaAttachment < ApplicationRecord
   include Remotable
 
   validates_attachment_content_type :file, content_type: IMAGE_MIME_TYPES + VIDEO_MIME_TYPES
-  validates_attachment_size :file, less_than: 8.megabytes
+  validates_attachment_size :file, less_than: 100.megabytes
 
   validates :account, presence: true
 
