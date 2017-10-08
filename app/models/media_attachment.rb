@@ -47,7 +47,7 @@ class MediaAttachment < ApplicationRecord
   has_attached_file :file,
                     styles: ->(f) { file_styles f },
                     processors: ->(f) { file_processors f },
-                    convert_options: { all: '-quality 90 -strip' }
+                    convert_options: { all: ->(f) { file_convert_options f } }
 
   include Remotable
 
@@ -118,6 +118,15 @@ class MediaAttachment < ApplicationRecord
         [:thumbnail, :compression]
       end
     end
+
+    def file_convert_options(f)
+      if f.file_content_type == 'image/png'
+        '-quality 1'
+      else
+        '-quality 90 -strip'
+      end
+    end
+
   end
 
   private
