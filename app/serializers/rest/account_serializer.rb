@@ -8,6 +8,10 @@ class REST::AccountSerializer < ActiveModel::Serializer
              :followers_count, :following_count, :statuses_count
   belongs_to :oauth_authentications
 
+  def id
+    object.id.to_s
+  end
+
   def note
     Formatter.instance.simplified_format(object)
   end
