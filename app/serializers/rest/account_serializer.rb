@@ -8,6 +8,10 @@ class REST::AccountSerializer < ActiveModel::Serializer
              :followers_count, :following_count, :statuses_count
   belongs_to :oauth_authentications
 
+  has_one :moved_to_account, key: :moved, serializer: REST::AccountSerializer, if: :moved?
+
+  delegate :moved?, to: :object
+
   def id
     object.id.to_s
   end
