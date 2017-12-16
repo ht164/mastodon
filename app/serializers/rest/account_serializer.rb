@@ -8,9 +8,7 @@ class REST::AccountSerializer < ActiveModel::Serializer
              :followers_count, :following_count, :statuses_count
   belongs_to :oauth_authentications
 
-  has_one :moved_to_account, key: :moved, serializer: REST::AccountSerializer, if: :moved?
-
-  delegate :moved?, to: :object
+  has_one :moved_to_account, key: :moved, serializer: REST::AccountSerializer, if: :moved_and_not_nested?
 
   def id
     object.id.to_s
@@ -38,6 +36,10 @@ class REST::AccountSerializer < ActiveModel::Serializer
 
   def header_static
     full_asset_url(object.header_static_url)
+  end
+
+  def moved_and_not_nested?
+    object.moved? && object.moved_to_account.moved_to_account_id.nil?
   end
 
   class OauthAuthenticationSerializer < ActiveModel::Serializer
