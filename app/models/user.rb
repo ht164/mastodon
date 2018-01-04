@@ -41,12 +41,15 @@ class User < ApplicationRecord
 
   ACTIVE_DURATION = 14.days
 
-  devise :registerable, :recoverable,
-         :rememberable, :trackable, :validatable, :confirmable,
-         :two_factor_authenticatable, :two_factor_backupable,
+  devise :two_factor_authenticatable,
          :omniauthable,
-         otp_secret_encryption_key: ENV['OTP_SECRET'],
+         otp_secret_encryption_key: ENV['OTP_SECRET']
+
+  devise :two_factor_backupable,
          otp_number_of_backup_codes: 10
+
+  devise :registerable, :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   belongs_to :account, inverse_of: :user, required: true
   belongs_to :invite, counter_cache: :uses
@@ -126,9 +129,19 @@ class User < ApplicationRecord
     update!(disabled: false)
   end
 
+  def confirm
+    return if confirmed?
+
+    super
+    update_statistics!
+  end
+
   def confirm!
+    return if confirmed?
+
     skip_confirmation!
     save!
+    update_statistics!
   end
 
   def promote!
@@ -207,6 +220,11 @@ class User < ApplicationRecord
     filtered_languages.reject!(&:blank?)
   end
 
+  def update_statistics!
+    BootstrapTimelineWorker.perform_async(account_id)
+    ActivityTracker.increment('activity:accounts:local')
+  end
+  
   def delete_initial_password_usage
     initial_password_usage&.destroy!
   end
