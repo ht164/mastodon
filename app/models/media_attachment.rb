@@ -129,7 +129,7 @@ class MediaAttachment < ApplicationRecord
       if f.file_content_type == 'image/png'
         '-quality 1'
       else
-        '-quality 90 -strip'
+        '-quality 92 -profile /mastodon/sRGB2014.icc -strip'
       end
     end
 
