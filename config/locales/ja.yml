@@ -351,7 +351,7 @@ ja:
     warning: このデータは気をつけて取り扱ってください。不特定多数の人と共有しないでください！
     your_token: アクセストークン
   auth:
-    agreement_html: 登録すると <a href="%{rules_path}">利用規約</a> と <a href="%{terms_path}">プライバシーポリシー</a> に同意したことになります。
+    agreement_html: 登録すると <a href="%{rules_path}">インスタンスのルール</a> と <a href="%{terms_path}">利用規約</a> に従うことに同意したことになります。
     change_password: セキュリティ
     confirmed_email: '(認証済み)'
     delete_account: アカウントの削除
@@ -620,6 +620,7 @@ ja:
       private: 非公開のトゥートを固定することはできません
       reblog: ブーストされたトゥートを固定することはできません
     show_more: もっと見る
+    title: '%{name}: "%{quote}"'
     visibilities:
       private: 非公開
       private_long: フォロワーにのみ表示されます
