@@ -5,7 +5,7 @@ require 'singleton'
 class FeedManager
   include Singleton
 
-  MAX_ITEMS = 400
+  MAX_ITEMS = 1000
 
   # Must be <= MAX_ITEMS or the tracking sets will grow forever
   REBLOG_FALLOFF = 40
