@@ -127,7 +127,7 @@ class MediaAttachment < ApplicationRecord
 
     def file_convert_options(f)
       if f.file_content_type == 'image/png'
-        '-quality 1'
+        '-quality 1 -profile /mastodon/sRGB2014.icc -strip'
       else
         '-quality 92 -profile /mastodon/sRGB2014.icc -strip'
       end
