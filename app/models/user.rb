@@ -51,8 +51,8 @@ class User < ApplicationRecord
   devise :registerable, :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  belongs_to :account, inverse_of: :user, required: true
-  belongs_to :invite, counter_cache: :uses
+  belongs_to :account, inverse_of: :user
+  belongs_to :invite, counter_cache: :uses, optional: true
   has_many :oauth_authentications, dependent: :destroy
   has_one :initial_password_usage, dependent: :destroy
   accepts_nested_attributes_for :account
@@ -174,6 +174,10 @@ class User < ApplicationRecord
     settings.default_privacy || (account.locked? ? 'private' : 'public')
   end
 
+  def allows_digest_emails?
+    settings.notification_emails['digest']
+  end
+
   def token_for_app(a)
     return nil if a.nil? || a.owner != self
     Doorkeeper::AccessToken
@@ -223,8 +227,9 @@ class User < ApplicationRecord
   def update_statistics!
     BootstrapTimelineWorker.perform_async(account_id)
     ActivityTracker.increment('activity:accounts:local')
+    UserMailer.welcome(self).deliver_later
   end
-  
+
   def delete_initial_password_usage
     initial_password_usage&.destroy!
   end

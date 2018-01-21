@@ -1,4 +1,4 @@
-FROM ruby:2.4.2-alpine3.6
+FROM ruby:2.5.0-alpine3.7
 
 LABEL maintainer="https://github.com/tootsuite/mastodon" \
       description="A GNU Social-compatible microblogging server"
@@ -41,6 +41,7 @@ RUN apk -U upgrade \
     protobuf \
     su-exec \
     tini \
+    tzdata \
  && update-ca-certificates \
  && mkdir -p /tmp/src /opt \
  && wget -O yarn.tar.gz "https://github.com/yarnpkg/yarn/releases/download/v$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
@@ -84,10 +85,10 @@ RUN bundle config build.nokogiri --with-iconv-lib=/usr/local/lib --with-iconv-in
  && yarn --pure-lockfile \
  && yarn cache clean
 
-RUN cd /mastodon/vendor/bundle/ruby/2.4.0/gems/paperclip-compression-0.3.16/bin/linux/x64/ \
+RUN cd /mastodon/vendor/bundle/ruby/2.5.0/gems/paperclip-compression-0.3.16/bin/linux/x64/ \
  && mv optipng optipng_bak \
  && ln -s /usr/local/bin/optipng . \
- && cd /mastodon/vendor/bundle/ruby/2.4.0//gems/paperclip-compression-0.3.16/bin/linux/x64/ \
+ && cd /mastodon/vendor/bundle/ruby/2.5.0//gems/paperclip-compression-0.3.16/bin/linux/x64/ \
  && mv jpegtran jpegtran_bak \
  && ln -s /usr/local/bin/jpegtran . \
  && cd /mastodon
