@@ -30,7 +30,7 @@ class MediaAttachment < ApplicationRecord
   VIDEO_FILE_EXTENSIONS = ['.webm', '.mp4', '.m4v'].freeze
 
   IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif'].freeze
-  VIDEO_MIME_TYPES = ['video/webm', 'video/mp4'].freeze
+  VIDEO_MIME_TYPES = ['video/webm', 'video/mp4', 'video/quicktime'].freeze
 
   IMAGE_STYLES = { original: '1920x1920>', small: '400x400>' }.freeze
   VIDEO_STYLES = {
