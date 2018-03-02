@@ -22,6 +22,11 @@ class Auth::RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  def update_resource(resource, params)
+    params[:password] = nil if Devise.pam_authentication && resource.encrypted_password.blank?
+    super
+  end
+
   def send_reset_password_instructions
     _resource = resource_class.send_reset_password_instructions(email: current_user.email)
 
