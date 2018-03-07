@@ -45,7 +45,7 @@ class User < ApplicationRecord
 
   devise :two_factor_authenticatable,
          :omniauthable,
-         otp_secret_encryption_key: ENV.fetch('OTP_SECRET')
+         otp_secret_encryption_key: Rails.configuration.x.otp_secret
 
   devise :two_factor_backupable,
          otp_number_of_backup_codes: 10

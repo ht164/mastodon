@@ -274,7 +274,7 @@ ja:
         email: ビジネスメールアドレス
         username: 連絡先のユーザー名
       hero:
-        desc_html: フロントページに表示されます。サイズは600x100px以上推奨です。未設定の場合、インスタンスのサムネイルが使用されます。
+        desc_html: フロントページに表示されます。サイズは600x100px以上推奨です。未設定の場合、インスタンスのサムネイルが使用されます
         title: ヒーローイメージ
       peers_api_enabled:
         desc_html: 連合内でこのインスタンスが遭遇したドメインの名前
@@ -361,6 +361,7 @@ ja:
     agreement_html: 登録すると <a href="%{rules_path}">インスタンスのルール</a> と <a href="%{terms_path}">利用規約</a> に従うことに同意したことになります。
     change_password: セキュリティ
     confirmed_email: '(認証済み)'
+    confirm_email: メールアドレスの確認
     delete_account: アカウントの削除
     delete_account_html: アカウントを削除したい場合、<a href="%{path}">こちら</a> から手続きが行えます。削除する前に、確認画面があります。
     didnt_get_confirmation: 確認メールを受信できませんか？
@@ -371,10 +372,15 @@ ja:
     migrate_account: 別のアカウントに引っ越す
     migrate_account_html: 引っ越し先を明記したい場合は<a href="%{path}">こちら</a>で設定できます。
     oauth_registration: 登録を続ける
+    or: または
     or_log_in_with: または次のサービスでログイン
+    providers:
+      cas: CAS
+      saml: SAML
     register: 登録する
     resend_confirmation: 確認メールを再送する
     reset_password: パスワードを再発行
+    security: セキュリティ
     send_password_setting_url: 'パスワードの設定URLを登録されたメールアドレス (%{email}) に送
 る'
     set_new_password: 新しいパスワード
@@ -553,7 +559,9 @@ ja:
     failed_linking: 連携できませんでした
     initial_password_usage_note_html: Twitterアカウント連携を変更する場合は、先に%{link}を設定する必要があります。
   pagination:
+    newer: 新しいトゥート
     next: 次
+    older: 以前のトゥート
     prev: 前
     truncate: "&hellip;"
   preferences:
