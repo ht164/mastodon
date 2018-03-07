@@ -38,7 +38,6 @@ RUN apk -U upgrade \
     libidn \
     libpq \
     nodejs \
-    nodejs-npm \
     openssl \
     protobuf \
     su-exec \
