@@ -164,7 +164,7 @@ class MediaAttachment < ApplicationRecord
       if f.file_content_type == 'image/gif'
         [:gif_transcoder]
       elsif VIDEO_QT_MIME_TYPES.include? f.file_content_type
-        [:transcoder]
+        [:qt_transcoder]
       elsif VIDEO_MIME_TYPES.include? f.file_content_type
         [:video_transcoder]
       else
