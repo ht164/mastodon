@@ -27,10 +27,11 @@ class MediaAttachment < ApplicationRecord
   enum type: [:image, :gifv, :video, :unknown]
 
   IMAGE_FILE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif'].freeze
-  VIDEO_FILE_EXTENSIONS = ['.webm', '.mp4', '.m4v'].freeze
+  VIDEO_FILE_EXTENSIONS = ['.webm', '.mp4', '.m4v', '.mov'].freeze
 
   IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif'].freeze
-  VIDEO_MIME_TYPES = ['video/webm', 'video/mp4', 'video/quicktime'].freeze
+  VIDEO_MIME_TYPES = ['video/webm', 'video/mp4'].freeze
+  VIDEO_QT_MIME_TYPES = ['video/quicktime'].freeze
 
   IMAGE_STYLES = {
     original: {
@@ -56,6 +57,19 @@ class MediaAttachment < ApplicationRecord
     },
   }.freeze
 
+  VIDEO_QT_STYLES = {
+    small: VIDEO_STYLES[:small],
+    original: {
+      format: 'mp4',
+      convert_options: {
+        output: {
+          #'acodec' => 'copy',
+          'vcodec' => 'copy',
+        },
+      },
+    },
+  }.freeze
+
   belongs_to :account, inverse_of: :media_attachments, optional: true
   belongs_to :status,  inverse_of: :media_attachments, optional: true
 
@@ -66,7 +80,7 @@ class MediaAttachment < ApplicationRecord
 
   include Remotable
 
-  validates_attachment_content_type :file, content_type: IMAGE_MIME_TYPES + VIDEO_MIME_TYPES
+  validates_attachment_content_type :file, content_type: IMAGE_MIME_TYPES + VIDEO_MIME_TYPES + VIDEO_QT_MIME_TYPES
   validates_attachment_size :file, less_than: 100.megabytes
 
   validates :account, presence: true
@@ -139,6 +153,8 @@ class MediaAttachment < ApplicationRecord
         }
       elsif IMAGE_MIME_TYPES.include? f.instance.file_content_type
         IMAGE_STYLES
+      elsif VIDEO_QT_MIME_TYPES.include? f.instance.file_content_type
+        VIDEO_QT_STYLES
       else
         VIDEO_STYLES
       end
@@ -147,6 +163,8 @@ class MediaAttachment < ApplicationRecord
     def file_processors(f)
       if f.file_content_type == 'image/gif'
         [:gif_transcoder]
+      elsif VIDEO_QT_MIME_TYPES.include? f.file_content_type
+        [:transcoder]
       elsif VIDEO_MIME_TYPES.include? f.file_content_type
         [:video_transcoder]
       else
@@ -182,8 +200,8 @@ class MediaAttachment < ApplicationRecord
   end
 
   def set_type_and_extension
-    self.type = VIDEO_MIME_TYPES.include?(file_content_type) ? :video : :image
-    extension = appropriate_extension
+    self.type = (VIDEO_MIME_TYPES + VIDEO_QT_MIME_TYPES).include?(file_content_type) ? :video : :image
+    extension = VIDEO_QT_MIME_TYPES.include?(file_content_type) ? 'mp4' : appropriate_extension
     basename  = Paperclip::Interpolations.basename(file, :original)
     file.instance_write :file_name, [basename, extension].delete_if(&:blank?).join('.')
   end
