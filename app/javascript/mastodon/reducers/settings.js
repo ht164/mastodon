@@ -62,6 +62,12 @@ const initialState = ImmutableMap({
       body: '',
     }),
   }),
+
+  direct: ImmutableMap({
+    regex: ImmutableMap({
+      body: '',
+    }),
+  }),
 });
 
 const defaultColumns = fromJS([
