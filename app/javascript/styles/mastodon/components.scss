@@ -3203,6 +3203,7 @@ a.status-card {
   &.active {
     background: $ui-highlight-color;
     color: $primary-text-color;
+    outline: 0;
 
     .privacy-dropdown__option__content {
       color: $primary-text-color;
