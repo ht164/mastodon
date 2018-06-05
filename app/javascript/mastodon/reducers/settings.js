@@ -68,6 +68,10 @@ const initialState = ImmutableMap({
       body: '',
     }),
   }),
+
+  trends: ImmutableMap({
+    show: true,
+  }),
 });
 
 const defaultColumns = fromJS([
