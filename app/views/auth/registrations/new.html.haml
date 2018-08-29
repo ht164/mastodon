@@ -10,8 +10,8 @@
   - if @invite.present? && @invite.autofollow?
     .fields-group{ style: 'margin-bottom: 30px' }
       %p.hint{ style: 'text-align: center' }= t('invites.invited_by')
-      = render 'authorize_follows/card', account: @invite.user.account
-      
+      = render 'application/card', account: @invite.user.account
+
   .omniauth
     = link_to '/auth/oauth/twitter', { :class => 'block-button omniauth-twitter' } do
       %i.icon-twitter
