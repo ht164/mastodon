@@ -25,11 +25,10 @@ class MediaAttachment < ApplicationRecord
   enum type: [:image, :gifv, :video, :unknown]
 
   IMAGE_FILE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif'].freeze
-  VIDEO_FILE_EXTENSIONS = ['.webm', '.mp4', '.m4v', '.mov'].freeze
+  VIDEO_FILE_EXTENSIONS = ['.webm', '.mp4', '.m4v'].freeze
 
   IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif'].freeze
   VIDEO_MIME_TYPES = ['video/webm', 'video/mp4'].freeze
-  VIDEO_QT_MIME_TYPES = ['video/quicktime'].freeze
 
   IMAGE_STYLES = {
     original: {
@@ -55,19 +54,6 @@ class MediaAttachment < ApplicationRecord
     },
   }.freeze
 
-  VIDEO_QT_STYLES = {
-    small: VIDEO_STYLES[:small],
-    original: {
-      format: 'mp4',
-      convert_options: {
-        output: {
-          #'acodec' => 'copy',
-          'vcodec' => 'copy',
-        },
-      },
-    },
-  }.freeze
-
   LIMIT = 8.megabytes
 
   belongs_to :account, inverse_of: :media_attachments, optional: true
@@ -78,7 +64,7 @@ class MediaAttachment < ApplicationRecord
                     processors: ->(f) { file_processors f },
                     convert_options: { all: ->(f) { file_convert_options f } }
 
-  validates_attachment_content_type :file, content_type: IMAGE_MIME_TYPES + VIDEO_MIME_TYPES + VIDEO_QT_MIME_TYPES
+  validates_attachment_content_type :file, content_type: IMAGE_MIME_TYPES + VIDEO_MIME_TYPES
   validates_attachment_size :file, less_than: LIMIT
   remotable_attachment :file, LIMIT
 
@@ -155,8 +141,6 @@ class MediaAttachment < ApplicationRecord
         }
       elsif IMAGE_MIME_TYPES.include? f.instance.file_content_type
         IMAGE_STYLES
-      elsif VIDEO_QT_MIME_TYPES.include? f.instance.file_content_type
-        VIDEO_QT_STYLES
       else
         VIDEO_STYLES
       end
@@ -165,8 +149,6 @@ class MediaAttachment < ApplicationRecord
     def file_processors(f)
       if f.file_content_type == 'image/gif'
         [:gif_transcoder]
-      elsif VIDEO_QT_MIME_TYPES.include? f.file_content_type
-        [:qt_transcoder]
       elsif VIDEO_MIME_TYPES.include? f.file_content_type
         [:video_transcoder]
       else
@@ -202,7 +184,7 @@ class MediaAttachment < ApplicationRecord
   end
 
   def set_type_and_extension
-    self.type = (VIDEO_MIME_TYPES + VIDEO_QT_MIME_TYPES).include?(file_content_type) ? :video : :image
+    self.type = VIDEO_MIME_TYPES.include?(file_content_type) ? :video : :image
   end
 
   def set_meta
