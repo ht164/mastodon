@@ -26,7 +26,7 @@ class CrossPostWorker
 
     media_ids = []
     status.media_attachments.each do |media_attachment|
-      open('/mastodon/public/system/' + media_attachment.file.path) do |media|
+      open(media_attachment.file.path) do |media|
         media_ids << client.upload(media)
       end
     end
