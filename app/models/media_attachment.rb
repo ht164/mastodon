@@ -162,15 +162,15 @@ class MediaAttachment < ApplicationRecord
       elsif VIDEO_MIME_TYPES.include? f.file_content_type
         [:video_transcoder]
       else
-        [:lazy_thumbnail, :compression]
+        [:thumbnail, :compression]
       end
     end
 
     def file_convert_options(f)
       if f.file_content_type == 'image/png'
-        '-quality 1 -profile /mastodon/sRGB2014.icc -strip'
+        '-quality 1 -profile /mastodon/sRGB2014.icc -depth 8 -strip'
       else
-        '-quality 92 -profile /mastodon/sRGB2014.icc -strip'
+        '-quality 92 -profile /mastodon/sRGB2014.icc -depth 8 -strip'
       end
     end
 
