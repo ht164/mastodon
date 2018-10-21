@@ -32,8 +32,12 @@ const messages = defineMessages({
   connect_to_twitter: { id: 'compose_form.connect_to_twitter', defaultMessage: 'Connect to Twitter' },
 });
 
-@injectIntl
-export default class ComposeForm extends ImmutablePureComponent {
+export default @injectIntl
+class ComposeForm extends ImmutablePureComponent {
+
+  static contextTypes = {
+    router: PropTypes.object,
+  };
 
   static propTypes = {
     intl: PropTypes.object.isRequired,
@@ -92,7 +96,7 @@ export default class ComposeForm extends ImmutablePureComponent {
       return;
     }
 
-    this.props.onSubmit();
+    this.props.onSubmit(this.context.router.history);
   }
 
   onSuggestionsClearRequested = () => {
