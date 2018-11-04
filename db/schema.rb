@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2018_10_26_034033) do
     t.datetime "updated_at", null: false
     t.bigint "account_id"
     t.index ["account_id", "domain"], name: "index_account_domain_blocks_on_account_id_and_domain", unique: true, using: :btree
-    t.index ["status_id"], name: "mentions_status_id_index", using: :btree
   end
 
   create_table "account_moderation_notes", force: :cascade do |t|
