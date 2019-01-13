@@ -1,5 +1,5 @@
-FROM node:8.12.0-alpine as node
-FROM ruby:2.5.3-alpine3.8
+FROM node:8.14.0-alpine as node
+FROM ruby:2.6.0-alpine3.8
 
 LABEL maintainer="https://github.com/tootsuite/mastodon" \
       description="Your self-hosted, globally interconnected microblogging community"
@@ -31,6 +31,8 @@ RUN apk -U upgrade \
     libidn-dev \
     libressl \
     libtool \
+    libxml2-dev \
+    libxslt-dev \
     postgresql-dev \
     protobuf-dev \
     python \
@@ -43,6 +45,8 @@ RUN apk -U upgrade \
     imagemagick \
     libidn \
     libpq \
+    libxml2 \
+    libxslt \
     openssl \
     protobuf \
     tini \
@@ -81,15 +85,15 @@ RUN apk -U upgrade \
 
 COPY Gemfile Gemfile.lock package.json yarn.lock .yarnclean /mastodon/
 
-RUN bundle config build.nokogiri --with-iconv-lib=/usr/local/lib --with-iconv-include=/usr/local/include \
+RUN bundle config build.nokogiri --use-system-libraries --with-iconv-lib=/usr/local/lib --with-iconv-include=/usr/local/include \
  && bundle install -j$(getconf _NPROCESSORS_ONLN) --deployment --without test development \
  && yarn install --pure-lockfile --ignore-engines \
  && yarn cache clean
 
-RUN cd /mastodon/vendor/bundle/ruby/2.5.0/gems/paperclip-compression-0.3.16/bin/linux/x64/ \
+RUN cd /mastodon/vendor/bundle/ruby/2.6.0/gems/paperclip-compression-0.3.16/bin/linux/x64/ \
  && mv optipng optipng_bak \
  && ln -s /usr/local/bin/optipng . \
- && cd /mastodon/vendor/bundle/ruby/2.5.0//gems/paperclip-compression-0.3.16/bin/linux/x64/ \
+ && cd /mastodon/vendor/bundle/ruby/2.6.0//gems/paperclip-compression-0.3.16/bin/linux/x64/ \
  && mv jpegtran jpegtran_bak \
  && ln -s /usr/local/bin/jpegtran . \
  && cd /mastodon
