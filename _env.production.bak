@@ -1,0 +1,130 @@
+# Service dependencies
+# You may set REDIS_URL instead for more advanced options
+REDIS_HOST=redis
+REDIS_PORT=6379
+# You may set DATABASE_URL instead for more advanced options
+DB_HOST=db
+DB_USER=postgres
+DB_NAME=postgres
+DB_PASS=
+DB_PORT=5432
+# Optional ElasticSearch configuration
+ES_ENABLED=true
+ES_HOST=localhost
+ES_PORT=9200
+
+# Federation
+# Note: Changing LOCAL_DOMAIN or LOCAL_HTTPS at a later time will cause unwanted side effects.
+# LOCAL_DOMAIN should *NOT* contain the protocol part of the domain e.g https://example.com.
+LOCAL_DOMAIN=localhost:2443
+
+# Changing LOCAL_HTTPS in production is no longer supported. (Mastodon will always serve https:// links)
+
+# Use this only if you need to run mastodon on a different domain than the one used for federation.
+# You can read more about this option on https://github.com/tootsuite/documentation/blob/master/Running-Mastodon/Serving_a_different_domain.md
+# DO *NOT* USE THIS UNLESS YOU KNOW *EXACTLY* WHAT YOU ARE DOING.
+# WEB_DOMAIN=mastodon.example.com
+
+# Use this if you want to have several aliases handler@example1.com
+# handler@example2.com etc. for the same user. LOCAL_DOMAIN should not
+# be added. Comma separated values
+# ALTERNATE_DOMAINS=example1.com,example2.com
+
+# Application secrets
+# Generate each with the `rake secret` task (`docker-compose run --rm web rake secret` if you use docker compose)
+PAPERCLIP_SECRET=882c913cbb294181771fd368e28b16bda8809465f3d28f4c8f41aed65ef1c4199299eee011d8377b0352a355bf2f69b6b3e9e4004cb877ec27af5c9e4fc27e5e
+SECRET_KEY_BASE=1974e26a1f9884ce0f8f5dbf738292b776025990a1f4f7abdecd2787a200569831a008418c56182ee909ef4e2f120a2cf3875502cf9e018fb6e685d217c6f941
+OTP_SECRET=c341b4c9eb243e60be58c1d164871d2d08be4e334467e0af21a18a1c8e0b1dcef97a9043a34075ffc8eb8393e1d7b7e94f3cd1d6d281f6fe8db01b9a7dc90a77
+
+# VAPID keys (used for push notifications
+# You can generate the keys using the following command (first is the private key, second is the public one)
+# You should only generate this once per instance. If you later decide to change it, all push subscription will
+# be invalidated, requiring the users to access the website again to resubscribe.
+#
+# Generate with `rake mastodon:webpush:generate_vapid_key` task (`docker-compose run --rm web rake mastodon:webpush:generate_vapid_key` if you use docker compose)
+#
+# For more information visit https://rossta.net/blog/using-the-web-push-api-with-vapid.html
+VAPID_PRIVATE_KEY=fZ9jsFhseh0SiUI_HKSU_ueA3o2WA00djJlMi3r88kw=
+VAPID_PUBLIC_KEY=BGNkr3blDhNlQi1t_nlbxUgAM-79kvH_acOKClpwknXXV13AKWFW74GR6CnEHjZv-SRR49FOrAQhjgztBt_gK3w=
+
+# Registrations
+# Single user mode will disable registrations and redirect frontpage to the first profile
+# SINGLE_USER_MODE=true
+# Prevent registrations with following e-mail domains
+# EMAIL_DOMAIN_BLACKLIST=example1.com|example2.de|etc
+# Only allow registrations with the following e-mail domains
+# EMAIL_DOMAIN_WHITELIST=example1.com|example2.de|etc
+
+# Optionally change default language
+# DEFAULT_LOCALE=de
+
+# E-mail configuration
+# Note: Mailgun and SparkPost (https://sparkpo.st/smtp) each have good free tiers
+# If you want to use an SMTP server without authentication (e.g local Postfix relay)
+# then set SMTP_AUTH_METHOD and SMTP_OPENSSL_VERIFY_MODE to 'none' and
+# *comment* SMTP_LOGIN and SMTP_PASSWORD (leaving them blank is not enough).
+SMTP_SERVER=smtp.mailgun.org
+SMTP_PORT=587
+SMTP_LOGIN=
+SMTP_PASSWORD=
+SMTP_FROM_ADDRESS=notifications@example.com
+#SMTP_DOMAIN= # defaults to LOCAL_DOMAIN
+#SMTP_DELIVERY_METHOD=smtp # delivery method can also be sendmail
+#SMTP_AUTH_METHOD=plain
+#SMTP_CA_FILE=/etc/ssl/certs/ca-certificates.crt
+#SMTP_OPENSSL_VERIFY_MODE=peer
+#SMTP_ENABLE_STARTTLS_AUTO=true
+
+
+# Optional user upload path and URL (images, avatars). Default is :rails_root/public/system. If you set this variable, you are responsible for making your HTTP server (eg. nginx) serve these files.
+# PAPERCLIP_ROOT_PATH=/var/lib/mastodon/public-system
+# PAPERCLIP_ROOT_URL=/system
+
+# Optional asset host for multi-server setups
+# CDN_HOST=assets.example.com
+
+# S3 (optional)
+# S3_ENABLED=true
+# S3_BUCKET=
+# AWS_ACCESS_KEY_ID=
+# AWS_SECRET_ACCESS_KEY=
+# S3_REGION=
+# S3_PROTOCOL=http
+# S3_HOSTNAME=192.168.1.123:9000
+
+# S3 (Minio Config (optional) Please check Minio instance for details)
+# S3_ENABLED=true
+# S3_BUCKET=
+# AWS_ACCESS_KEY_ID=
+# AWS_SECRET_ACCESS_KEY=
+# S3_REGION=
+# S3_PROTOCOL=https
+# S3_HOSTNAME=
+# S3_ENDPOINT=
+# S3_SIGNATURE_VERSION=
+
+# Optional alias for S3 if you want to use Cloudfront or Cloudflare in front
+# S3_CLOUDFRONT_HOST=
+
+# Streaming API integration
+# STREAMING_API_BASE_URL=
+
+# Advanced settings
+# If you need to use pgBouncer, you need to disable prepared statements:
+# PREPARED_STATEMENTS=false
+
+# Cluster number setting for streaming API server.
+# If you comment out following line, cluster number will be `numOfCpuCores - 1`.
+STREAMING_CLUSTER_NUM=1
+
+# Docker mastodon user
+# If you use Docker, you may want to assign UID/GID manually.
+# UID=1000
+# GID=1000
+
+# Twitter
+OAUTH_TWITTER_KEY=zOMfd6ujjPDOOVfCEjjyBMrbb
+OAUTH_TWITTER_SECRET=zzNdaiGLHRj5QDBG3JPaRZpOCt7LmUCFvEYRa5kxrmLM6fiXRZ
+
+
+DISABLE_DATABASE_ENVIRONMENT_CHECK=1

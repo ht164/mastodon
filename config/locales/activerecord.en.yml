@@ -2,6 +2,9 @@
 en:
   activerecord:
     attributes:
+      poll:
+        expires_at: Deadline
+        options: Choices
       oauth_authentication:
         provider: Provider
         uid: Twitter ID
