@@ -213,9 +213,9 @@ class MediaAttachment < ApplicationRecord
 
     def file_convert_options(f)
       if f.file_content_type == 'image/png'
-        '-quality 1 -profile /mastodon/sRGB2014.icc -depth 8 -strip'
+        '-quality 1 -profile /mastodon/sRGB2014.icc -depth 8 -strip +set modify-date +set create-date'
       else
-        '-quality 92 -profile /mastodon/sRGB2014.icc -depth 8 -strip'
+        '-quality 92 -profile /mastodon/sRGB2014.icc -depth 8 -strip +set modify-date +set create-date'
       end
     end
 

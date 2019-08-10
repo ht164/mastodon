@@ -141,7 +141,7 @@ export function submitCompose(routerHistory) {
       media_ids: media.map(item => item.get('id')),
       tweet: getState().getIn(['settings', 'compose', 'tweet'], false),
       sensitive: getState().getIn(['compose', 'sensitive']),
-      spoiler_text: getState().getIn(['compose', 'spoiler_text'], ''),
+      spoiler_text: getState().getIn(['compose', 'spoiler']) ? getState().getIn(['compose', 'spoiler_text'], '') : '',
       visibility: getState().getIn(['compose', 'privacy']),
       poll: getState().getIn(['compose', 'poll'], null),
     }, {
