@@ -1,4 +1,4 @@
-= simple_form_for(new_user, url: user_registration_path) do |f|
+= simple_form_for(new_user, url: user_registration_path, namespace: 'registration') do |f|
   .omniauth
     = link_to '/auth/oauth/twitter', { :class => 'block-button omniauth-twitter' } do
       %i.icon-twitter

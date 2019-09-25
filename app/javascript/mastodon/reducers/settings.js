@@ -10,13 +10,15 @@ import uuid from '../uuid';
 const initialState = ImmutableMap({
   saved: true,
 
-  onboarded: false,
-
   compose: ImmutableMap({
     tweet: false
   }),
 
   skinTone: 1,
+
+  trends: ImmutableMap({
+    show: true,
+  }),
 
   home: ImmutableMap({
     shows: ImmutableMap({
@@ -77,10 +79,6 @@ const initialState = ImmutableMap({
     regex: ImmutableMap({
       body: '',
     }),
-  }),
-
-  trends: ImmutableMap({
-    show: true,
   }),
 });
 
