@@ -21,7 +21,7 @@ module Mastodon
     end
 
     def suffix
-      ''
+      'ht'
     end
 
     def to_a
