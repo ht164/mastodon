@@ -24,17 +24,16 @@ class CrossPostWorker
       text = text.gsub(text_over, '…')
     end
 
-    media_ids = []
-    status.media_attachments.each do |media_attachment|
-      open(media_attachment.file.path) do |media|
-        media_ids << client.upload(media)
-      end
-    end
+    medias = status.media_attachments.map { |media_attachment| open(media_attachment.file.path) }
 
-    if media_ids.empty?
+    if medias.empty?
       client.update(text)
     else
-      client.update(text, {media_ids: media_ids.join(',')})
+      client.update_with_media(text, medias)
+    end
+
+    medias.each do |media|
+      media.close
     end
 
   rescue ActiveRecord::RecordNotFound, Twitter::Error::Unauthorized
