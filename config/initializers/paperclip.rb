@@ -96,4 +96,4 @@ else
   )
 end
 
-Paperclip::Attachment.default_options[:compression] = { :png => '-o 1 -quiet', :jpeg => '-copy none -optimize -perfect' }
+Paperclip::Attachment.default_options[:compression] = { :jpeg => '-copy none -optimize -perfect' }

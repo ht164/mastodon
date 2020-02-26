@@ -49,16 +49,6 @@ RUN apt update && \
 
 ENV PATH="${PATH}:/opt/ruby/bin:/opt/node/bin"
 
-# Install OptiPNG
-ENV OPTIPNG_VER="0.7.6"
-RUN cd ~ && \
-  wget -O optipng.tar.gz "http://jaist.dl.sourceforge.net/project/optipng/OptiPNG/optipng-$OPTIPNG_VER/optipng-$OPTIPNG_VER.tar.gz" && \
-	tar zxvf optipng.tar.gz && \
-	cd optipng-$OPTIPNG_VER && \
-  ./configure --prefix=/opt/optipng && \
-  make -j$(nproc) > /dev/null && \
-	make install
-
 # Install mozjpeg
 ENV MOZJPEG_VER="3.2"
 RUN cd ~ && \
@@ -89,7 +79,6 @@ FROM ubuntu:18.04
 COPY --from=build-dep /opt/node /opt/node
 COPY --from=build-dep /opt/ruby /opt/ruby
 COPY --from=build-dep /opt/jemalloc /opt/jemalloc
-COPY --from=build-dep /opt/optipng /opt/optipng
 COPY --from=build-dep /opt/mozjpeg /opt/mozjpeg
 
 # Add more PATHs to the PATH
@@ -128,12 +117,8 @@ RUN chmod +x /tini
 COPY --chown=mastodon:mastodon . /opt/mastodon
 COPY --from=build-dep --chown=mastodon:mastodon /opt/mastodon /opt/mastodon
 
-# Replace optipng
-RUN cd /mastodon/vendor/bundle/ruby/2.6.0/gems/paperclip-compression-0.3.16/bin/linux/x64/ && \
- mv optipng optipng_bak && \
- ln -s /opt/optipng/bin/optipng .
 # Replace jpegtran
-RUN cd /mastodon/vendor/bundle/ruby/2.6.0/gems/paperclip-compression-0.3.16/bin/linux/x64/ && \
+RUN cd /mastodon/vendor/bundle/ruby/2.6.0/gems/paperclip-compression-1.1.0/bin/linux/x64/ && \
  mv jpegtran jpegtran_bak && \
  ln -s /opt/mozjpeg/bin/jpegtran .
 

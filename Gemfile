@@ -26,7 +26,7 @@ gem 'fog-core', '<= 2.1.0'
 gem 'fog-openstack', '~> 0.3', require: false
 gem 'paperclip', '~> 6.0'
 gem 'paperclip-av-transcoder', '~> 0.6'
-gem 'paperclip-compression', '~>0.3.16'
+gem 'paperclip-compression', '~>1.1.0'
 gem 'streamio-ffmpeg', '~> 3.0'
 gem 'blurhash', '~> 0.1'
 
