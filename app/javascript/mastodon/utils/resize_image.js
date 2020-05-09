@@ -81,8 +81,10 @@ const processImage = (img, { width, height, orientation, type = 'image/png' }) =
 const resizeImage = (img, type = 'image/png') => new Promise((resolve, reject) => {
   const { width, height } = img;
 
-  const newWidth  = Math.round(Math.sqrt(MAX_IMAGE_PIXELS * (width / height)));
-  const newHeight = Math.round(Math.sqrt(MAX_IMAGE_PIXELS * (height / width)));
+  const isResize = (width * height > MAX_IMAGE_PIXELS);
+
+  const newWidth  = isResize ? Math.round(Math.sqrt(MAX_IMAGE_PIXELS * (width / height))) : width;
+  const newHeight = isResize ? Math.round(Math.sqrt(MAX_IMAGE_PIXELS * (height / width))) : height;
 
   getOrientation(img, type)
     .then(orientation => processImage(img, {
@@ -102,11 +104,6 @@ export default inputFile => new Promise((resolve, reject) => {
   }
 
   loadImage(inputFile).then(img => {
-    if (img.width * img.height < MAX_IMAGE_PIXELS) {
-      resolve(inputFile);
-      return;
-    }
-
     resizeImage(img, inputFile.type)
       .then(resolve)
       .catch(() => resolve(inputFile));
