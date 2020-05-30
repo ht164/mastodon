@@ -69,10 +69,10 @@ class MediaAttachment < ApplicationRecord
         'vf' => 'scale=\'trunc(iw/2)*2:trunc(ih/2)*2\'',
         'vsync' => 'cfr',
         'c:v' => 'h264',
-        'maxrate' => '1300K',
-        'bufsize' => '1300K',
+        'maxrate' => '3.2M',
+        'bufsize' => '3.2M',
         'frames:v' => 60 * 60 * 3,
-        'crf' => 18,
+        'crf' => 23,
         'map_metadata' => '-1',
       },
     },
@@ -253,6 +253,8 @@ class MediaAttachment < ApplicationRecord
         [:gif_transcoder, :blurhash_transcoder]
       elsif f.file_content_type == 'image/jpeg'
         [:thumbnail, :compression, :blurhash_transcoder, :type_corrector]
+      elsif f.file_content_type == 'image/png'
+        [:png_converter, :blurhash_transcoder, :type_corrector]
       elsif VIDEO_MIME_TYPES.include?(f.file_content_type)
         [:video_transcoder, :blurhash_transcoder, :type_corrector]
       elsif AUDIO_MIME_TYPES.include?(f.file_content_type)
@@ -264,7 +266,7 @@ class MediaAttachment < ApplicationRecord
 
     def file_convert_options(f)
       if f.file_content_type == 'image/png'
-        '-quality 75 -profile /mastodon/sRGB2014.icc -depth 8 -strip +set modify-date +set create-date -define png:color-type=2'
+        '-quality 75 -profile /mastodon/sRGB2014.icc -depth 8 -strip +set modify-date +set create-date'
       else
         '-quality 92 -profile /mastodon/sRGB2014.icc -depth 8 -strip +set modify-date +set create-date'
       end
