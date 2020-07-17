@@ -96,7 +96,7 @@ gem 'sidekiq-bulk', '~>0.2.0'
 gem 'simple-navigation', '~> 4.1'
 gem 'simple_form', '~> 5.0'
 gem 'sprockets-rails', '~> 3.2', require: 'sprockets/railtie'
-gem 'stoplight', '~> 2.2.0'
+gem 'stoplight', '~> 2.2.1'
 gem 'strong_migrations', '~> 0.6'
 gem 'tty-prompt', '~> 0.21', require: false
 gem 'twitter', git: 'https://github.com/ht164/twitter', ref: '5cde66abf9545a19fe6c054b6fbd63d6e7ec99e9'
