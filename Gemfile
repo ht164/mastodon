@@ -100,7 +100,7 @@ gem 'stoplight', '~> 2.2.0'
 gem 'strong_migrations', '~> 0.6'
 gem 'tty-prompt', '~> 0.21', require: false
 gem 'twitter', git: 'https://github.com/ht164/twitter', ref: '5cde66abf9545a19fe6c054b6fbd63d6e7ec99e9'
-gem 'twitter-text', '~> 1.14'
+gem 'twitter-text', '~> 3.1'
 gem 'type_attributes'
 gem 'tzinfo-data', '~> 1.2020'
 gem 'webpacker', '~> 5.1'
