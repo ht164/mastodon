@@ -423,7 +423,6 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    openssl (2.0.6)
     orm_adapter (0.5.0)
     os (1.0.1)
     ox (2.13.2)
@@ -680,7 +679,7 @@ GEM
       tty-cursor (~> 0.7)
       tty-screen (~> 0.7)
       wisper (~> 2.0.0)
-    tty-screen (0.8.0)
+    tty-screen (0.8.1)
     twitter-text (1.14.7)
       unf (~> 0.1.0)
     type_attributes (0.1.1)
