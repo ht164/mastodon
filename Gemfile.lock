@@ -423,7 +423,6 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    openssl (2.0.6)
     orm_adapter (0.5.0)
     os (1.0.1)
     ox (2.13.2)
@@ -518,7 +517,7 @@ GEM
       thor (>= 0.19.0, < 2.0)
     rainbow (3.0.0)
     rake (13.0.1)
-    rb-fsevent (0.10.3)
+    rb-fsevent (0.10.4)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rdf (3.1.4)
