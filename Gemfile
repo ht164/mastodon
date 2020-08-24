@@ -103,7 +103,7 @@ gem 'twitter', git: 'https://github.com/ht164/twitter', ref: '5cde66abf9545a19fe
 gem 'twitter-text', '~> 1.14'
 gem 'type_attributes'
 gem 'tzinfo-data', '~> 1.2020'
-gem 'webpacker', '~> 5.1'
+gem 'webpacker', '~> 5.2'
 gem 'webpush'
 
 gem 'json-ld'
