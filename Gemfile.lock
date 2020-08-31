@@ -274,7 +274,7 @@ GEM
       http (~> 4.0)
       nokogiri (~> 1.8)
       oj (~> 3.0)
-    hamlit (2.11.0)
+    hamlit (2.11.1)
       temple (>= 0.8.2)
       thor
       tilt
@@ -423,7 +423,6 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    openssl (2.0.6)
     orm_adapter (0.5.0)
     os (1.0.1)
     ox (2.13.2)
