@@ -423,7 +423,6 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    openssl (2.0.6)
     orm_adapter (0.5.0)
     os (1.0.1)
     ox (2.13.2)
@@ -440,7 +439,7 @@ GEM
       os (~> 1.0.0)
       paperclip (>= 5.2.1)
     parallel (1.19.2)
-    parallel_tests (3.0.0)
+    parallel_tests (3.2.0)
       parallel
     parser (2.7.1.4)
       ast (~> 2.4.1)
@@ -797,7 +796,7 @@ DEPENDENCIES
   paperclip-av-transcoder (~> 0.6)
   paperclip-compression (~> 1.1.0)
   parallel (~> 1.19)
-  parallel_tests (~> 3.0)
+  parallel_tests (~> 3.2)
   parslet
   pg (~> 1.2)
   pghero (~> 2.5)
