@@ -134,7 +134,7 @@ COPY --chown=mastodon:mastodon . /opt/mastodon
 COPY --from=build-dep --chown=mastodon:mastodon /opt/mastodon /opt/mastodon
 
 # Replace jpegtran
-RUN cd /mastodon/vendor/bundle/ruby/2.6.0/gems/paperclip-compression-1.1.0/bin/linux/x64/ && \
+RUN cd /mastodon/vendor/bundle/ruby/2.7.0/gems/paperclip-compression-1.1.0/bin/linux/x64/ && \
  mv jpegtran jpegtran_bak && \
  ln -s /opt/mozjpeg/bin/jpegtran .
 
