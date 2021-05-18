@@ -112,9 +112,10 @@ else
   )
 end
 
-Paperclip::Attachment.default_options[:compression] = { :jpeg => '-copy none -optimize -perfect' }
-
-Paperclip.options[:content_type_mappings] = { csv: Import::FILE_TYPES }
+Rails.application.reloader.to_prepare do
+  Paperclip::Attachment.default_options[:compression] = { :jpeg => '-copy none -optimize -perfect' }
+  Paperclip.options[:content_type_mappings] = { csv: Import::FILE_TYPES }
+end
 
 # In some places in the code, we rescue this exception, but we don't always
 # load the S3 library, so it may be an undefined constant:

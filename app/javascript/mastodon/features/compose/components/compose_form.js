@@ -143,8 +143,16 @@ class ComposeForm extends ImmutablePureComponent {
   onChangeTweet = (e) => {
     this.props.onChangeTweet(e.target.checked);
   }
+  
+  componentDidMount () {
+    this._updateFocusAndSelection({ });
+  }
 
   componentDidUpdate (prevProps) {
+    this._updateFocusAndSelection(prevProps);
+  }
+
+  _updateFocusAndSelection = (prevProps) => {
     // This statement does several things:
     // - If we're beginning a reply, and,
     //     - Replying to zero or one users, places the cursor at the end of the textbox.
